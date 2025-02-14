@@ -21,10 +21,10 @@ def convert_tsv_to_csv(input_file: str, output_file: str):
     except Exception as e:
         raise ValueError(f"Failed to read the TSV file {input_file}: {e}")
 
-    check_columns(df, ['rrp_price'])
-    # i've picked this field because 'price' is not present in tsv file in test assignment
-    df['rrp_price'] = pd.to_numeric(df['rrp_price'], errors='coerce')
-    df['price_edited'] = df['rrp_price'].astype(float)
+    original_field = "search_price"
+    check_columns(df, [original_field])
+    df[original_field] = pd.to_numeric(df[original_field], errors='coerce')
+    df['price_edited'] = df[original_field].astype(float)
 
     try:
         df.to_csv(output_file, index=False)
